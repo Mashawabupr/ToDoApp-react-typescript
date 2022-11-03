@@ -7,11 +7,13 @@ function App() {
   let addTodo = (todo: Todo) => {
     setItem((prev) => prev.concat(todo));
   };
-
+  let handleDelete = (el: any) => {
+    setItem((prev) => prev.filter((it) => it.id !== el));
+  };
   return (
     <div>
       <NewTodo onAddTodo={addTodo} />
-      <Todos items={item} />
+      <Todos items={item} onDelete={handleDelete} />
     </div>
   );
 }

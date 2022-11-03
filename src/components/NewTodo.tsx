@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import classes from "./NewTodo.module.css";
 import Todo from "../models/Todo";
 let NewTodo: React.FC<{ onAddTodo: (todo: Todo) => void }> = (props) => {
   let inputRef = useRef<HTMLInputElement>(null);
@@ -6,14 +7,13 @@ let NewTodo: React.FC<{ onAddTodo: (todo: Todo) => void }> = (props) => {
     event.preventDefault();
     let enteredValue = inputRef.current!.value;
     if (enteredValue.trim().length > 0) {
-      
-      
       props.onAddTodo({ id: String(Math.random()), text: enteredValue });
     }
   };
   return (
-    <form onSubmit={handleForm}>
-      <input type="text" ref={inputRef} />
+    <form onSubmit={handleForm} className={classes.form}>
+      <label htmlFor="text">Todo text</label>
+      <input type="text" ref={inputRef} id="text" />
       <button>Submit</button>
     </form>
   );
