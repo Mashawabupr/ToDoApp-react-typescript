@@ -1,20 +1,19 @@
-import { useRef } from "react";
 import classes from "./NewTodo.module.css";
-import Todo from "../models/Todo";
-let NewTodo: React.FC<{ onAddTodo: (todo: Todo) => void }> = (props) => {
-  let inputRef = useRef<HTMLInputElement>(null);
+import React, { useRef } from "react";
+type func = {
+  onAdding: (text: string) => void;
+};
+let NewTodo: React.FC<func> = (props) => {
+  let valueRef = useRef<HTMLInputElement>(null);
   let handleForm = (event: React.FormEvent) => {
     event.preventDefault();
-    let enteredValue = inputRef.current!.value;
-    if (enteredValue.trim().length > 0) {
-      props.onAddTodo({ id: String(Math.random()), text: enteredValue });
-    }
+    let input = valueRef.current!.value;
+    props.onAdding(input);
   };
   return (
     <form onSubmit={handleForm} className={classes.form}>
-      <label htmlFor="text">Todo text</label>
-      <input type="text" ref={inputRef} id="text" />
-      <button>Submit</button>
+      <input ref={valueRef} />
+      <button>Add Todo</button>
     </form>
   );
 };

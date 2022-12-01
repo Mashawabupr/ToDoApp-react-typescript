@@ -1,21 +1,25 @@
+import React, { useState } from "react";
 import Todos from "./components/Todos";
-import Todo from "./models/Todo";
 import NewTodo from "./components/NewTodo";
-import { useState } from "react";
-function App() {
-  let [item, setItem] = useState<Todo[]>([]);
-  let addTodo = (todo: Todo) => {
-    setItem((prev) => prev.concat(todo));
+
+let App: React.FC = () => {
+  let [todosList, setTodo] = useState<{ id: string; text: string }[]>([]);
+  let addingTodo = (text: string) => {
+    if (text.trim().length > 0) {
+      setTodo((prev) => [...prev, { id: String(Math.random()), text }]);
+    }
   };
-  let handleDelete = (el: any) => {
-    setItem((prev) => prev.filter((it) => it.id !== el));
+  let handleDelete = (id: string) => {
+    setTodo((prev) => prev.filter((item) => item.id !== id));
   };
   return (
     <div>
-      <NewTodo onAddTodo={addTodo} />
-      <Todos items={item} onDelete={handleDelete} />
+      <NewTodo onAdding={addingTodo} />
+      {todosList.length > 0 && (
+        <Todos todosList={todosList} onDelete={handleDelete} />
+      )}
     </div>
   );
-}
+};
 
 export default App;
